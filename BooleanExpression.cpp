@@ -53,3 +53,4 @@ bool BooleanExpression::evaluate(bool A, bool B, bool C) {
         if (var == 'C') return C;
         return false;
     };
+}
