@@ -86,4 +86,22 @@ bool BooleanExpression::evaluate(bool A, bool B, bool C) {
         return parseFactor();
     };
 
+    // Parse AND, NAND (next precedence)
+    parseAndNand = [&]() -> bool {
+        bool val = parseNot();
+        while (pos < logic.length()) {
+            if (logic.substr(pos, 4) == "NAND") { // check NAND before AND
+                pos += 4;
+                bool right = parseNot();
+                val = !(val && right);
+            } else if (logic.substr(pos, 3) == "AND") {
+                pos += 3;
+                bool right = parseNot();
+                val = val && right;
+            } else {
+                break;
+            }
+        }
+        return val;
+    };
 
