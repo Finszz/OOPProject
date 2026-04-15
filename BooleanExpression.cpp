@@ -70,3 +70,20 @@ bool BooleanExpression::evaluate(bool A, bool B, bool C) {
         return false;
     };
 
+    // Parse NOT (highest precedence after parentheses)
+    parseNot = [&]() -> bool {
+        if (pos < logic.length() && logic.substr(pos, 3) == "NOT") {
+            pos += 3;
+            // Handle NOT with parentheses, for example: NOT(A)
+            if (pos < logic.length() && logic[pos] == '(') {
+                pos++;
+                bool val = parseExpr();
+                if (pos < logic.length() && logic[pos] == ')') pos++;
+                return !val;
+            }
+            return !parseNot();
+        }
+        return parseFactor();
+    };
+
+
