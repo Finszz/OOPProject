@@ -53,5 +53,20 @@ bool BooleanExpression::evaluate(bool A, bool B, bool C) {
         if (var == 'C') return C;
         return false;
     };
-}
+
+    // Parse factor: variable or parenthesis
+    parseFactor = [&]() -> bool {
+        if (pos >= logic.length()) return false;
+        if (logic[pos] == '(') {
+            pos++;
+            bool val = parseExpr();
+            if (pos < logic.length() && logic[pos] == ')') pos++;
+            return val;
+        }
+        if (logic[pos] == 'A' || logic[pos] == 'B' || logic[pos] == 'C') {
+            char var = logic[pos++];
+            return getVar(var);
+        }
+        return false;
+    };
 
