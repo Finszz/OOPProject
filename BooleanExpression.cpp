@@ -105,3 +105,30 @@ bool BooleanExpression::evaluate(bool A, bool B, bool C) {
         return val;
     };
 
+// Parse OR, NOR, XOR (lowest precedence)
+    parseXorNorOr = [&]() -> bool {
+        bool val = parseAndNand();
+        while (pos < logic.length()) {
+            if (logic.substr(pos, 3) == "NOR") { // check NOR before OR
+                pos += 3;
+                bool right = parseAndNand();
+                val = !(val || right);
+            } else if (logic.substr(pos, 2) == "OR") {
+                pos += 2;
+                bool right = parseAndNand();
+                val = val || right;
+            } else if (logic.substr(pos, 3) == "XOR") {
+                pos += 3;
+                bool right = parseAndNand();
+                val = val != right;
+            } else {
+                break;
+            }
+        }
+        return val;
+    };
+
+    parseExpr = parseXorNorOr;
+    pos = 0;
+    return parseExpr();
+}
