@@ -9,7 +9,7 @@ private:
     string expr;
 
 public:
-    BooleanExpression(string code);
+    BooleanExpression(string logic);
 
     void explainOperators();
 

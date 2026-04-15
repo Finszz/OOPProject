@@ -5,8 +5,8 @@
 
 using namespace std;
 
-BooleanExpression::BooleanExpression(string code){
-    expr = code;
+BooleanExpression::BooleanExpression(string logic){
+    expr = logic;
 
     // To make uppercase for easier parsing
     transform(expr.begin(), expr.end(), expr.begin(), ::toupper);
@@ -36,9 +36,9 @@ void BooleanExpression::explainOperators() {
 }
 
 bool BooleanExpression::evaluate(bool A, bool B, bool C) {
-    string exp = expr;
-    exp.erase(remove(exp.begin(), exp.end(), ' '), exp.end());
-    transform(exp.begin(), exp.end(), exp.begin(), ::toupper);
+    string logic = expr;
+    logic.erase(remove(logic.begin(), logic.end(), ' '), logic.end());
+    transform(logic.begin(), logic.end(), logic.begin(), ::toupper);
 
     size_t pos = 0;
     function<bool()> parseExpr;
@@ -54,3 +54,4 @@ bool BooleanExpression::evaluate(bool A, bool B, bool C) {
         return false;
     };
 }
+
