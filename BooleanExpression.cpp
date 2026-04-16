@@ -16,14 +16,14 @@ void BooleanExpression::explainOperators() {
 
     cout << "\nOperators used:\n";
 
+    if (expr.find("NOT") != string::npos)
+        cout << "NOT: reverse value\n";
+
     if (expr.find("AND") != string::npos)
         cout << "AND: both must be true\n";
 
     if (expr.find("OR") != string::npos)
         cout << "OR: at least one true\n";
-
-    if (expr.find("NOT") != string::npos)
-        cout << "NOT: reverse value\n";
 
     if (expr.find("XOR") != string::npos)
         cout << "XOR: different inputs\n";
