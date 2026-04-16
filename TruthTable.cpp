@@ -23,3 +23,26 @@ void TruthTable::generate() {
         cout << "| " << setw(1) << A << " | " << setw(1) << B << " | " << setw(1) << C << " | " << setw(6) << result << " |\n";
     }
 }
+
+void TruthTable::save(string filename, string expression) {
+
+    ofstream file(filename + ".txt");
+
+    file << "Expression: " << expression << "\n\n";
+    file << "| A | B | C | result |\n";
+
+    for (int i = 0; i < 8; i++) {
+
+        bool A = (i & 4);
+        bool B = (i & 2);
+        bool C = (i & 1);
+
+        bool result = expr.evaluate(A, B, C);
+
+        file << "| " << setw(1) << A << " | " << setw(1) << B << " | " << setw(1) << C << " | " << setw(6) << result << " |\n";
+    }
+
+    file.close();
+
+    cout << "Saved.\n";
+}
