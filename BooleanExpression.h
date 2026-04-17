@@ -10,11 +10,9 @@ private:
     string expr;
 
 public:
-    BooleanExpression(string logic);
+    BooleanExpression(string exp);
 
     void explainOperators();
-
-    vector<string> getSteps();
 
     bool evaluate(bool A, bool B, bool C);
 };
