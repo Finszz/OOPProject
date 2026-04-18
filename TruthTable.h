@@ -7,14 +7,14 @@ using namespace std;
 
 class TruthTable {
 private:
-    BooleanExpression expr;
+    BooleanExpression express;
 
 public:
-    TruthTable(BooleanExpression logic);
+    TruthTable(BooleanExpression express);
 
     void generate();
 
-    void save(string filename, string expression);
+    void save(string filename);
 };
 
 #endif
