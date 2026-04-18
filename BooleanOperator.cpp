@@ -17,10 +17,7 @@ bool NOT::apply(bool a, bool b) {
 
 // XOR
 bool XOR::apply(bool a, bool b) {
-    if (a != b)
-        return true;
-    else
-        return false;
+    return a != b;
 }
 
 // NAND
