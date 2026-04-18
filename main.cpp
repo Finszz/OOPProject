@@ -5,31 +5,29 @@ using namespace std;
 
 int main() {
 
-    cout << "Boolean Simulator\n";
+    cout << "BOOLEAN TRUTH TABLE SIMULATOR\n\n";
 
     string input;
-    cout << "Enter expression: ";
+
+    cout << "Enter Boolean Expression:\n";
     getline(cin, input);
 
-    BooleanExpression logic(input);
+    BooleanExpression inputTT(input);
 
-    logic.explainOperators();
-
-    TruthTable table(logic);
+    TruthTable table(inputTT);
 
     table.generate();
 
     char choice;
-    cout << "\nSave? (Y/N): ";
+    cout << "\nWould you like to save this truth table? (Y/N): ";
     cin >> choice;
 
     if (choice == 'Y' || choice == 'y') {
-
         string name;
-        cout << "Filename: ";
+        cout << "Enter filename: ";
         cin >> name;
 
-        table.save(name, input);
+        table.save(name);
     }
 
     return 0;
