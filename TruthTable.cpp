@@ -2,52 +2,90 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
+#include <vector>
 
 using namespace std;
 
-TruthTable::TruthTable(BooleanExpression logic) : expr(logic) {}
+TruthTable::TruthTable(BooleanExpression inputTT) : express(inputTT) {}
 
+
+// show truth table
 void TruthTable::generate() {
-    cout << "\nTruth Table:\n";
-    cout << "|A|B|C|NOT A|NOT B|NOT C|A AND B|A AND C|B AND C|A OR B|A OR C|B OR C|result|\n";
-    for (int i = 0; i < 8; i++) {
-        bool A = (i & 4) != 0;
-        bool B = (i & 2) != 0;
-        bool C = (i & 1) != 0;
-        bool notA = !A;
-        bool notB = !B;
-        bool notC = !C;
-        bool aandb = A && B;
-        bool aandc = A && C;
-        bool bandc = B && C;
-        bool aorb = A || B;
-        bool aorc = A || C;
-        bool borc = B || C;
-        bool result = expr.evaluate(A, B, C);
-        cout << "|" << A << "|" << B << "|" << C << "|" << notA << "|" << notB << "|" << notC << "|" << aandb << "|" << aandc << "|" << bandc << "|" << aorb << "|" << aorc << "|" << borc << "|" << result << "|\n";
+
+    vector<string> steps = express.getSteps();
+
+    cout << "\nTruth Table:\n\n";
+
+    // print header
+    for (int i = 0; i < steps.size(); i++) {
+        cout << "| " << setw(12) << left << steps[i] << " ";
+    }
+    cout << "|\n";
+
+    // line
+    for (int i = 0; i < steps.size(); i++) {
+        cout << "---------------";
+    }
+    cout << "-\n";
+
+
+    // rows (000 to 111)
+    for (int n = 0; n < 8; n++) {
+
+        bool A = (n & 4);
+        bool B = (n & 2);
+        bool C = (n & 1);
+
+        for (int i = 0; i < steps.size(); i++) {
+
+            bool result = express.evaluate(A, B, C, steps[i]);
+
+            cout << "| " << setw(12) << left << result << " ";
+        }
+
+        cout << "|\n";
     }
 }
 
-void TruthTable::save(string filename, string expression) {
+
+
+// save file
+void TruthTable::save(string filename) {
+
     ofstream file(filename + ".txt");
-    file << "Expression: " << expression << "\n\n";
-    file << "|A|B|C|NOT A|NOT B|NOT C|A AND B|A AND C|B AND C|A OR B|A OR C|B OR C|result|\n";
-    for (int i = 0; i < 8; i++) {
-        bool A = (i & 4) != 0;
-        bool B = (i & 2) != 0;
-        bool C = (i & 1) != 0;
-        bool notA = !A;
-        bool notB = !B;
-        bool notC = !C;
-        bool aandb = A && B;
-        bool aandc = A && C;
-        bool bandc = B && C;
-        bool aorb = A || B;
-        bool aorc = A || C;
-        bool borc = B || C;
-        bool result = expr.evaluate(A, B, C);
-        file << "|" << A << "|" << B << "|" << C << "|" << notA << "|" << notB << "|" << notC << "|" << aandb << "|" << aandc << "|" << bandc << "|" << aorb << "|" << aorc << "|" << borc << "|" << result << "|\n";
+
+    vector<string> steps = express.getSteps();
+
+    // header
+    for (int i = 0; i < steps.size(); i++) {
+        file << "| " << setw(12) << left << steps[i] << " ";
     }
+    file << "|\n";
+
+    for (int i = 0; i < steps.size(); i++) {
+        file << "---------------";
+    }
+    file << "-\n";
+
+
+    // rows
+    for (int n = 0; n < 8; n++) {
+
+        bool A = (n & 4);
+        bool B = (n & 2);
+        bool C = (n & 1);
+
+        for (int i = 0; i < steps.size(); i++) {
+
+            bool result = express.evaluate(A, B, C, steps[i]);
+
+            file << "| " << setw(12) << left << result << " ";
+        }
+
+        file << "|\n";
+    }
+
     file.close();
-    cout << "Saved.\n";
+
+    cout << "\nSaved successfully.\n";
 }
