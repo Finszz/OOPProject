@@ -7,14 +7,16 @@ using namespace std;
 
 class BooleanExpression {
 private:
-    string expr;
+    string expression;
 
 public:
-    BooleanExpression(string exp);
+    BooleanExpression(string text);
 
-    void explainOperators();
+    string getExpression();
 
-    bool evaluate(bool A, bool B, bool C);
+    vector<string> getSteps();
+
+    bool evaluate(bool A, bool B, bool C, string step);
 };
 
 #endif
