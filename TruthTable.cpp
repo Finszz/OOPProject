@@ -51,7 +51,7 @@ void TruthTable::generate() {
 
 // save file
 void TruthTable::save(string filename) {
-
+    
     ofstream file(filename + ".txt");
 
     vector<string> steps = express.getSteps();
